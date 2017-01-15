@@ -24,13 +24,13 @@ class ViewController: UIViewController{
         super.viewDidLoad()
         
       ref = FIRDatabase.database().reference()
-      let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+      let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.navController = self.navigationController
         
        
     }
 
-    @IBAction func SignIn(sender: UIButton) {
+    @IBAction func SignIn(_ sender: UIButton) {
     
     
      Fvc.SignIn(self.EmailField.text!, Upassword: self.PasswordField.text!) { (error) -> () in
@@ -41,18 +41,23 @@ class ViewController: UIViewController{
          }
          else {
             
+            
                if self.Fvc.IsVreifiedUser()
                {
                     print("Signed In")
-                    self.performSegueWithIdentifier("Go", sender: self)
+                    self.performSegue(withIdentifier: "Go", sender: self)
                }
+            
+               else{
+                self.alertView("Email address not verified", Message: "Please verify your email address to  continue.")
+   
+            }
             }
         }
         
-     //   [self.alertView("Email address not verified", Message: "Please verify your email address to  continue.")]
 
     }
-    @IBAction func SignUpButton(sender: UIButton) {
+    @IBAction func SignUpButton(_ sender: UIButton) {
         
         Fvc.CreateAuthenticatedUser(self.EmailField.text!, Upassword: self.PasswordField.text!, Shouldverify: true){ (error) -> () in
             if error != nil
@@ -68,18 +73,19 @@ class ViewController: UIViewController{
         
     }
 
-    func alertView (Title:String, Message:String)
+    func alertView (_ Title:String, Message:String)
     {
         let alertController = UIAlertController(title:Title ,
             message: Message,
-            preferredStyle: UIAlertControllerStyle.Alert
+            preferredStyle: UIAlertControllerStyle.alert
         )
         alertController.addAction(UIAlertAction(title: "OKAY",
-            style: UIAlertActionStyle.Default,
+            style: UIAlertActionStyle.default,
             handler: nil)
         )
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.navController.presentViewController(alertController, animated: true, completion: nil)
+    
+        self.present(alertController, animated: true, completion: nil)
+      //  self.navigationController?.present(alertController, animated: true, completion: nil)
     }
 
 }

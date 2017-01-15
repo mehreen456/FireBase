@@ -38,7 +38,7 @@ class AccountViewController: UIViewController {
     }
 
     
-    @IBAction func SignOut(sender: UIButton) {
+    @IBAction func SignOut(_ sender: UIButton) {
         
         try! FIRAuth.auth()?.signOut()
         print("User SignOut")

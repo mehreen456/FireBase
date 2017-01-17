@@ -2,12 +2,19 @@
 # platform :ios, '9.0'
 
 target 'FireBaseApp' do
-  # Comment this line if you're not using Swift and don't want to use dynamic frameworks
+
   use_frameworks!
 
-  # Pods for FireBaseApp
    pod 'Firebase/Core'
    pod 'Firebase/Auth'
    pod 'Firebase/Database'
    pod 'GoogleSignIn'
 end
+
+target 'FireBaseAppTestsTests' do
+    pod 'OHHTTPStubs'
+    pod 'Firebase/Core'
+    pod 'Firebase/Auth'
+end
+
+

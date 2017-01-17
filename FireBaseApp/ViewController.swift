@@ -10,7 +10,7 @@ import UIKit
 
 import Firebase
 import FirebaseAuth
-import FirebaseDatabase
+
 
 class ViewController: UIViewController{
 
@@ -18,20 +18,16 @@ class ViewController: UIViewController{
     @IBOutlet var PasswordField: UITextField!
     let Fvc=FireBase()
     
-    var ref: FIRDatabaseReference!
+   // var ref: FIRDatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-      ref = FIRDatabase.database().reference()
-      let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.navController = self.navigationController
-        
-       
+     // ref = FIRDatabase.database().reference()
+
     }
 
-    @IBAction func SignIn(sender: UIButton) {
-    
+    @IBAction func SignIn(sender: UIButton)  {
     
      Fvc.SignIn(self.EmailField.text!, Upassword: self.PasswordField.text!) { (error) -> () in
         
@@ -54,7 +50,7 @@ class ViewController: UIViewController{
     }
     @IBAction func SignUpButton(sender: UIButton) {
         
-        Fvc.CreateAuthenticatedUser(self.EmailField.text!, Upassword: self.PasswordField.text!, Shouldverify: true){ (error) -> () in
+        Fvc.CreateAuthenticatedUser(self.EmailField.text!, Upassword: self.PasswordField.text!, Shouldverify: true, completion: { (error) -> () in
             if error != nil
             {
                 print(error!.localizedDescription)
@@ -62,7 +58,8 @@ class ViewController: UIViewController{
             else {
                 print("User Created")
             }
-        }
+        })
+        
 
     //    [self.alertView("Email address verification", Message: "We have sent you an email that contains a link - you must click this link before you can continue.")]
         
@@ -74,12 +71,14 @@ class ViewController: UIViewController{
             message: Message,
             preferredStyle: UIAlertControllerStyle.Alert
         )
-        alertController.addAction(UIAlertAction(title: "OKAY",
-            style: UIAlertActionStyle.Default,
+        alertController.addAction(UIAlertAction(title: "OKAY", style: UIAlertActionStyle.Default,
             handler: nil)
         )
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.navController.presentViewController(alertController, animated: true, completion: nil)
+       
+    }
+    func istrue() -> Bool
+    {
+        return true
     }
 
 }

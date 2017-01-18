@@ -15,6 +15,7 @@ target 'FireBaseAppTestsTests' do
     pod 'OHHTTPStubs'
     pod 'Firebase/Core'
     pod 'Firebase/Auth'
+    pod 'Firebase/Database'
 end
 
 

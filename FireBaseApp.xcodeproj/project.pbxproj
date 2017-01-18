@@ -18,6 +18,7 @@
 		CFC5E8171E2E0C0A00BFA4A3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF93B57F1E2508CD00B0400B /* ViewController.swift */; };
 		CFC5E8181E2E0C1100BFA4A3 /* FireBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6FD18B1E27B0B00018EE02 /* FireBase.swift */; };
 		CFC5E8191E2E0C3000BFA4A3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF93B57F1E2508CD00B0400B /* ViewController.swift */; };
+		CFCE4ADA1E2F3AC9008704C2 /* FireBaseDataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCE4AD91E2F3AC9008704C2 /* FireBaseDataBase.swift */; };
 		CFDA48471E2601FB00F55476 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CFDA48461E2601FB00F55476 /* GoogleService-Info.plist */; };
 		CFDA484A1E26527200F55476 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDA48491E26527200F55476 /* AccountViewController.swift */; };
 /* End PBXBuildFile section */
@@ -47,6 +48,7 @@
 		CFC5E8071E2E048700BFA4A3 /* FireBaseAppTestsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FireBaseAppTestsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFC5E80B1E2E048700BFA4A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CFC5E8111E2E050200BFA4A3 /* ViwcontrollerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViwcontrollerTest.swift; sourceTree = "<group>"; };
+		CFCE4AD91E2F3AC9008704C2 /* FireBaseDataBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireBaseDataBase.swift; sourceTree = "<group>"; };
 		CFDA48461E2601FB00F55476 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CFDA48491E26527200F55476 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		D399DE9BC748B0D7BD9B9664 /* Pods-FireBaseAppTestsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireBaseAppTestsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FireBaseAppTestsTests/Pods-FireBaseAppTestsTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				CF93B5891E2508CD00B0400B /* Info.plist */,
 				CFDA48491E26527200F55476 /* AccountViewController.swift */,
 				CF6FD18B1E27B0B00018EE02 /* FireBase.swift */,
+				CFCE4AD91E2F3AC9008704C2 /* FireBaseDataBase.swift */,
 			);
 			path = FireBaseApp;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 			files = (
 				CF93B57E1E2508CD00B0400B /* AppDelegate.swift in Sources */,
 				CF6FD18C1E27B0B00018EE02 /* FireBase.swift in Sources */,
+				CFCE4ADA1E2F3AC9008704C2 /* FireBaseDataBase.swift in Sources */,
 				CFC5E8191E2E0C3000BFA4A3 /* ViewController.swift in Sources */,
 				CFDA484A1E26527200F55476 /* AccountViewController.swift in Sources */,
 			);

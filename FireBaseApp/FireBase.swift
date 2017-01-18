@@ -13,73 +13,62 @@ import FirebaseAuth
 class FireBase: NSObject {
  
     
-    func CreateAuthenticatedUser(Uemail:String , Upassword:String, Shouldverify:Bool, completion: (NSError?) -> ())
-    {
-  
-        [self.CreateUser(Uemail, Upassword: Upassword){ (error) -> () in
-            
-            if error != nil
-            {
-                completion(error! as NSError?)
-            }
-            else{
-                completion(nil)
-                if Shouldverify
-                {
+    func CreateAuthenticatedUser(Uemail:String , Upassword:String,Shouldverify:Bool, Success:(String) -> (), Failure: (NSError) -> ())
+        {
+             [self.CreateUser(Uemail, Upassword: Upassword, success:{ (userId) -> () in
+                
+                Success(userId)
+                
+                if Shouldverify{
+                    
                     [self.SendVerificationEmail(Uemail, Upassword: Upassword) { (error) -> () in
                         
-                        if error != nil
-                        {
-                            completion(error! as NSError?)
-                        }
-                        else{
-                            completion(nil)
-                        }
-                        
+                        if error != nil{
+                            Failure((error! as NSError?)!)}
                         }]
-                }
-            }
-         }]
+                }},
+                
+                failure: { (error) -> () in
+                    Failure(error)
+                })]
     }
 
-    func CreateUser( Uemail:String , Upassword:String , completion: (NSError?) -> ())
+    func CreateUser( Uemail:String , Upassword:String  , success:(String) -> (), failure: (NSError) -> ())
     {
         FIRAuth.auth()?.createUserWithEmail(Uemail, password: Upassword, completion: {
             (user,error) in
-           if error != nil
-                {
-                    completion(error! as NSError?)
+           if error == nil{
+              success((user?.uid)!)
             }
-            else{
-                completion(nil)
-           
-                }
+           else{
+               failure ((error! as NSError?)!)
+            }
          })
     }
     
-    func SendVerificationEmail( Uemail:String , Upassword:String , completion: (NSError?) -> ())
+    func SendVerificationEmail( Uemail:String , Upassword:String , Error: (NSError?) -> ())
     {
         FIRAuth.auth()?.currentUser?.sendEmailVerificationWithCompletion({ (error) in
             if error != nil
             {
-                completion(error! as NSError?)
+                Error(error! as NSError?)
             }
             else{
-                completion(nil)
+                Error(nil)
             }
         })
     }
     
-    func SignIn(Uemail:String , Upassword:String , completion: (NSError?) -> ()) {
+    func SignIn(Uemail:String , Upassword:String ,success:(Bool) -> (), failure: (NSError) -> ()) {
         
         FIRAuth.auth()?.signInWithEmail(Uemail, password: Upassword, completion: {
             (user,error) in
-            if error != nil
+            if error == nil
             {
-                completion(error! as NSError?)
+                success(true)
             }
             else{
-                completion(nil)
+                failure((error! as NSError?)!)
             }
             
         })

@@ -17,6 +17,7 @@ class ViewController: UIViewController{
     @IBOutlet var EmailField: UITextField!
     @IBOutlet var PasswordField: UITextField!
     let Fvc=FireBase()
+    let FBDataBase=FireBaseDataBase()
     
    // var ref: FIRDatabaseReference!
     
@@ -29,41 +30,43 @@ class ViewController: UIViewController{
 
     @IBAction func SignIn(sender: UIButton)  {
     
-     Fvc.SignIn(self.EmailField.text!, Upassword: self.PasswordField.text!) { (error) -> () in
-        
-        if error != nil
-         {
-              print(error!.localizedDescription)
-         }
-         else {
+        Fvc.SignIn(self.EmailField.text!, Upassword: self.PasswordField.text!, success: {
+            (userId) -> () in
             
-               if self.Fvc.IsVreifiedUser()
-               {
-                    print("Signed In")
-                    self.performSegueWithIdentifier("Go", sender: self)
-               }
+            if self.Fvc.IsVreifiedUser()
+            {
+                print("Signed In")
+                self.performSegueWithIdentifier("Go", sender: self)
             }
-        }
-        
-     //   [self.alertView("Email address not verified", Message: "Please verify your email address to  continue.")]
+            else
+            {
+                [self.alertView("Email address not verified", Message: "Please verify your email address to  continue.")]
+            }
+            },
+            
+            failure: { (error) -> () in
+                print(error.localizedDescription)
+               [self.alertView("Error!", Message:error.localizedDescription)]
+        })
+}
 
-    }
     @IBAction func SignUpButton(sender: UIButton) {
         
-        Fvc.CreateAuthenticatedUser(self.EmailField.text!, Upassword: self.PasswordField.text!, Shouldverify: true, completion: { (error) -> () in
-            if error != nil
-            {
-                print(error!.localizedDescription)
-            }
-            else {
-                print("User Created")
-            }
+        Fvc.CreateAuthenticatedUser(self.EmailField.text!, Upassword: self.PasswordField.text!,
+            
+            Shouldverify: true, Success: { (userId) -> () in
+                
+               print(userId)
+              [self.alertView("Email address verification", Message: "We have sent you an email that contains a link - you must click this link before you can continue.")]
+                
+               self.FBDataBase.AddUserInDB(self.EmailField.text!, Upassword: self.PasswordField.text!, UserId: userId)
+            },
+            
+            Failure: { (error) -> () in
+                print(error.localizedDescription)
+            [self.alertView("Error!", Message:error.localizedDescription)]
         })
-        
-
-    //    [self.alertView("Email address verification", Message: "We have sent you an email that contains a link - you must click this link before you can continue.")]
-        
-    }
+}
 
     func alertView (Title:String, Message:String)
     {
@@ -74,7 +77,7 @@ class ViewController: UIViewController{
         alertController.addAction(UIAlertAction(title: "OKAY", style: UIAlertActionStyle.Default,
             handler: nil)
         )
-       
+       self.presentViewController(alertController, animated: true, completion: nil)
     }
     func istrue() -> Bool
     {

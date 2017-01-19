@@ -17,14 +17,12 @@ class FireBaseDataBase: NSObject {
      var ref: FIRDatabaseReference!
      var refHandle: UInt! 
 
-    func AddUserInDB(DataToStore: Dictionary <String,NSObject>)
+    func AddUserInDB(DataBaseName:String, ItemNameOrId
+        :String , DataToStore: Dictionary <String,NSObject>)
     {
         ref = FIRDatabase.database().reference()
-        
-        ref.child("Users").child("UserInfo").setValue(DataToStore)
-        //Ref.child("Users").child(UserId).setValue(["Email":Uemail, "Password":Upassword])
+        ref.child(DataBaseName).child(ItemNameOrId).setValue(DataToStore)
     }
-    
     func RetriveAllData()
     {
         ref = FIRDatabase.database().reference()
@@ -35,15 +33,16 @@ class FireBaseDataBase: NSObject {
         })
     }
     
-    func GetCurrentUser()
+    func GetCurrentUser(DataBaseName:String, ItemNameOrId
+        :NSObject , success:(AnyObject) -> ())
     {
+        
         ref = FIRDatabase.database().reference()
         let userID: String=(FIRAuth.auth()?.currentUser?.uid)!
-        ref.child("Users").child(userID).observeSingleEventOfType(.Value , withBlock: {(snapshot) in
-          
-            let email = snapshot.value!["Email"] as! String
-            let password = snapshot.value!["Password"] as! String
-            
+        ref.child(DataBaseName).child(userID).observeSingleEventOfType(.Value , withBlock: {(snapshot) in
+            let dataDict = snapshot.value as! [String: AnyObject]
+            success(dataDict)
         })
+       
     }
 }

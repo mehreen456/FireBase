@@ -33,15 +33,15 @@ class ViewController: UIViewController{
         Fvc.SignIn(self.EmailField.text!, Upassword: self.PasswordField.text!, success: {
             (userId) -> () in
             
-            if self.Fvc.IsVreifiedUser()
-            {
+           // if self.Fvc.IsVreifiedUser()
+          //  {
                 print("Signed In")
                 self.performSegueWithIdentifier("Go", sender: self)
-            }
+         /*   }
             else
             {
                 [self.alertView("Email address not verified", Message: "Please verify your email address to  continue.")]
-            }
+            }*/
             },
             
             failure: { (error) -> () in
@@ -54,18 +54,12 @@ class ViewController: UIViewController{
         
         Fvc.CreateAuthenticatedUser(self.EmailField.text!, Upassword: self.PasswordField.text!,
             
-            Shouldverify: true, Success: { (userId) -> () in
-                
-               print(userId)
-              [self.alertView("Email address verification", Message: "We have sent you an email that contains a link - you must click this link before you can continue.")]
-                
-                let arr:[String:NSObject] = [
-                    "name": "mehreen",
-                    "addedByUser": "mehreen456",
-                    "completed": true
-                ]
-
-               self.FBDataBase.AddUserInDB(arr)
+            Shouldverify: false, Success: { (userId) -> () in
+              print(userId)
+                [self.UserSignIn()]
+               // [self.alertView("Email address verification", Message: "We have sent you an email that contains a link - you must click this link before you can continue.")]
+            
+                self.FBDataBase.AddUserInDB("Users",ItemNameOrId: userId,DataToStore: self.DataToStore())
             },
             
             Failure: { (error) -> () in
@@ -85,10 +79,32 @@ class ViewController: UIViewController{
         )
        self.presentViewController(alertController, animated: true, completion: nil)
     }
-    func istrue() -> Bool
+    
+    func DataToStore() -> Dictionary <String,NSObject>
     {
-        return true
+        let dic:[String:NSObject] = [
+            
+            "email": self.EmailField.text!,
+            "password": self.PasswordField.text!,
+            
+        ]
+        return dic
     }
+    
+    func UserSignIn()
+    {
+        Fvc.SignIn(self.EmailField.text!, Upassword: self.PasswordField.text!, success: {
+            (userId) -> () in
 
+                print("Signed In")
+                self.performSegueWithIdentifier("Go", sender: self)
+            },
+            
+            failure: { (error) -> () in
+                print(error.localizedDescription)
+                [self.alertView("Error!", Message:error.localizedDescription)]
+        })
+
+    }
 }
 

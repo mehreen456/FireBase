@@ -15,6 +15,7 @@ class AccountViewController: UIViewController {
     @IBOutlet var UserEmail: UILabel!
     @IBOutlet var UserPassword: UILabel!
     
+    var FBDataBase = FireBaseDataBase()
     var ref: FIRDatabaseReference!
     var refHandle: UInt!
     
@@ -29,13 +30,16 @@ class AccountViewController: UIViewController {
         })
         
         let userID: String=(FIRAuth.auth()?.currentUser?.uid)!
-        ref.child("Users").child(userID).observeSingleEventOfType(.Value , withBlock: {(snapshot) in
-            let email = snapshot.value!["Email"] as! String
-            let password = snapshot.value!["Password"] as! String
+        FBDataBase.GetCurrentUser("Users", ItemNameOrId: userID, success: { (snapshot) -> () in
+            
+            let email = snapshot.value!["name"] as! String
+            let password = snapshot.value!["addedByUser"] as! String
             self.UserEmail.text = email
             self.UserPassword.text = password
+
             
         })
+       
     }
 
     

@@ -26,7 +26,8 @@ class FireBase: NSObject {
                         if error != nil{
                             Failure((error! as NSError?)!)}
                         }]
-                }},
+                }
+                },
                 
                 failure: { (error) -> () in
                     Failure(error)

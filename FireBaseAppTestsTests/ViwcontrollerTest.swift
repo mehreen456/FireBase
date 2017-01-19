@@ -25,20 +25,24 @@ class ViwcontrollerTest: XCTestCase {
 
     func testSignIn()
     {
-        
+        let asyncExpectation = expectationWithDescription("Get Response")
         let email = "mehreen@gmail.com"
         let pass = "qweasd"
  
         fvc.SignIn(email, Upassword: pass, success: {
             (userId) -> () in
-            
-            
+             asyncExpectation.fulfill()
             },
             
             failure: { (error) -> () in
                
         })
-
+       
+        waitForExpectationsWithTimeout(10, handler: { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        })
         
     }
     

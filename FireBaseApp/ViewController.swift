@@ -59,7 +59,13 @@ class ViewController: UIViewController{
                print(userId)
               [self.alertView("Email address verification", Message: "We have sent you an email that contains a link - you must click this link before you can continue.")]
                 
-               self.FBDataBase.AddUserInDB(self.EmailField.text!, Upassword: self.PasswordField.text!, UserId: userId)
+                let arr:[String:NSObject] = [
+                    "name": "mehreen",
+                    "addedByUser": "mehreen456",
+                    "completed": true
+                ]
+
+               self.FBDataBase.AddUserInDB(arr)
             },
             
             Failure: { (error) -> () in

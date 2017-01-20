@@ -19,30 +19,33 @@ class ViewController: UIViewController{
     let Fvc=FireBase()
     let FBDataBase=FireBaseDataBase()
     
-   // var ref: FIRDatabaseReference!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-     // ref = FIRDatabase.database().reference()
-
     }
 
     @IBAction func SignIn(sender: UIButton)  {
     
         Fvc.SignIn(self.EmailField.text!, Upassword: self.PasswordField.text!, success: {
-            (userId) -> () in
+            (success) -> () in
             
+            self.FBDataBase.findUsers("Users",key:"email" ,text: "asdqwe@gmail.com", success:{(snapshot) -> () in
+               
+            })
+            if success
+            {
            // if self.Fvc.IsVreifiedUser()
           //  {
                 print("Signed In")
+                let userID: String=(FIRAuth.auth()?.currentUser?.uid)!
+                self.FBDataBase.AddOnlineUsers("Online Users",ItemNameOrId: userID,DataToStore: self.DataToStore())
                 self.performSegueWithIdentifier("Go", sender: self)
          /*   }
             else
             {
                 [self.alertView("Email address not verified", Message: "Please verify your email address to  continue.")]
             }*/
-            },
+            }},
             
             failure: { (error) -> () in
                 print(error.localizedDescription)
@@ -56,8 +59,7 @@ class ViewController: UIViewController{
             
             Shouldverify: false, Success: { (userId) -> () in
               print(userId)
-                [self.UserSignIn()]
-               // [self.alertView("Email address verification", Message: "We have sent you an email that contains a link - you must click this link before you can continue.")]
+              // [self.alertView("Email address verification", Message: "We have sent you an email that contains a link - you must click this link before you can continue.")]
             
                 self.FBDataBase.AddUserInDB("Users",ItemNameOrId: userId,DataToStore: self.DataToStore())
             },
@@ -91,20 +93,5 @@ class ViewController: UIViewController{
         return dic
     }
     
-    func UserSignIn()
-    {
-        Fvc.SignIn(self.EmailField.text!, Upassword: self.PasswordField.text!, success: {
-            (userId) -> () in
-
-                print("Signed In")
-                self.performSegueWithIdentifier("Go", sender: self)
-            },
-            
-            failure: { (error) -> () in
-                print(error.localizedDescription)
-                [self.alertView("Error!", Message:error.localizedDescription)]
-        })
-
-    }
-}
+  }
 

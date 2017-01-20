@@ -25,12 +25,24 @@ class ViwcontrollerTest: XCTestCase {
 
     func testSignIn()
     {
-        
+        let asyncExpectation = expectationWithDescription("Get Response")
         let email = "mehreen@gmail.com"
         let pass = "qweasd"
-        fvc.SignIn(email, Upassword: pass) { (error) -> () in
-            XCTAssertEqual(nil,error)
-        }
+ 
+        fvc.SignIn(email, Upassword: pass, success: {
+            (userId) -> () in
+             asyncExpectation.fulfill()
+            },
+            
+            failure: { (error) -> () in
+               
+        })
+       
+        waitForExpectationsWithTimeout(10, handler: { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        })
         
     }
     
@@ -40,13 +52,20 @@ class ViwcontrollerTest: XCTestCase {
        
         let email = "mehreen.ku1@gmail.com"
         let pass = "qweasd"
-        fvc.CreateAuthenticatedUser(email, Upassword: pass, Shouldverify: false, completion: { (error) -> () in
-         
-           XCTAssertEqual(nil, error, "error ..")
-            asyncExpectation.fulfill()
-            
-        })
         
+        
+        fvc.CreateAuthenticatedUser(email, Upassword: pass, Shouldverify: false,
+            
+             Success: { (userId) -> () in
+                
+                asyncExpectation.fulfill()
+
+            },
+            
+            Failure: { (error) -> () in
+                
+        })
+
         waitForExpectationsWithTimeout(10, handler: { error in
             if let error = error {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")

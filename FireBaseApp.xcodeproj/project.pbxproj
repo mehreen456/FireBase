@@ -10,6 +10,7 @@
 		617A603A98A412D20FC56036 /* Pods_FireBaseApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E125AEABE5DD98D7CB107032 /* Pods_FireBaseApp.framework */; };
 		CB0D2516D51EC2796C809B8B /* libPods-FireBaseAppTestsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0CE9F553CEB4D72B9810EDA /* libPods-FireBaseAppTestsTests.a */; };
 		CF6FD18C1E27B0B00018EE02 /* FireBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6FD18B1E27B0B00018EE02 /* FireBase.swift */; };
+		CF9283051E308B0E0063AC6C /* FireBaseDataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCE4AD91E2F3AC9008704C2 /* FireBaseDataBase.swift */; };
 		CF93B57E1E2508CD00B0400B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF93B57D1E2508CD00B0400B /* AppDelegate.swift */; };
 		CF93B5831E2508CD00B0400B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF93B5811E2508CD00B0400B /* Main.storyboard */; };
 		CF93B5851E2508CD00B0400B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF93B5841E2508CD00B0400B /* Assets.xcassets */; };
@@ -358,6 +359,7 @@
 				CFC5E8171E2E0C0A00BFA4A3 /* ViewController.swift in Sources */,
 				CFC5E8181E2E0C1100BFA4A3 /* FireBase.swift in Sources */,
 				CFC5E8121E2E050200BFA4A3 /* ViwcontrollerTest.swift in Sources */,
+				CF9283051E308B0E0063AC6C /* FireBaseDataBase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

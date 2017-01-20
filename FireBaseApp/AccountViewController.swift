@@ -15,33 +15,32 @@ class AccountViewController: UIViewController {
     @IBOutlet var UserEmail: UILabel!
     @IBOutlet var UserPassword: UILabel!
     
+    var FBDataBase = FireBaseDataBase()
     var ref: FIRDatabaseReference!
     var refHandle: UInt!
+    let userID: String=(FIRAuth.auth()?.currentUser?.uid)!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        ref = FIRDatabase.database().reference()
-        refHandle = ref.observeEventType(FIRDataEventType.Value, withBlock: {(snapshot) in
-         
-            let dataDict = snapshot.value as! [String: AnyObject]
-            print(dataDict)
-        })
-        
-        let userID: String=(FIRAuth.auth()?.currentUser?.uid)!
-        ref.child("Users").child(userID).observeSingleEventOfType(.Value , withBlock: {(snapshot) in
-            let email = snapshot.value!["Email"] as! String
-            let password = snapshot.value!["Password"] as! String
-            self.UserEmail.text = email
-            self.UserPassword.text = password
-            
-        })
-    }
+  
+        FBDataBase.GetSpecificUser("Users", ItemNameOrId: userID, success: { (snapshot) -> () in
 
-    
+            self.UserEmail.text = snapshot.value!["email"] as? String
+            self.UserPassword.text = snapshot.value! ["password"] as? String
+        })
+      
+        FBDataBase.RetriveAllData({ (snapshot) -> () in
+            
+            print(snapshot.value as? [String : AnyObject])
+        })
+       
+    }
+ 
     @IBAction func SignOut(sender: UIButton) {
         
         try! FIRAuth.auth()?.signOut()
+        FBDataBase.RemoveSpecificUser("Online Users", ItemNameOrId
+            :userID)
         print("User SignOut")
 
     }

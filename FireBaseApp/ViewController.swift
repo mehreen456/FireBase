@@ -19,30 +19,33 @@ class ViewController: UIViewController{
     let Fvc=FireBase()
     let FBDataBase=FireBaseDataBase()
     
-   // var ref: FIRDatabaseReference!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-     // ref = FIRDatabase.database().reference()
-
     }
 
     @IBAction func SignIn(sender: UIButton)  {
     
         Fvc.SignIn(self.EmailField.text!, Upassword: self.PasswordField.text!, success: {
-            (userId) -> () in
+            (success) -> () in
             
-            if self.Fvc.IsVreifiedUser()
+            self.FBDataBase.findUsers("Users",key:"email" ,text: "asdqwe@gmail.com", success:{(snapshot) -> () in
+               
+            })
+            if success
             {
+           // if self.Fvc.IsVreifiedUser()
+          //  {
                 print("Signed In")
+                let userID: String=(FIRAuth.auth()?.currentUser?.uid)!
+                self.FBDataBase.AddOnlineUsers("Online Users",ItemNameOrId: userID,DataToStore: self.DataToStore())
                 self.performSegueWithIdentifier("Go", sender: self)
-            }
+         /*   }
             else
             {
                 [self.alertView("Email address not verified", Message: "Please verify your email address to  continue.")]
-            }
-            },
+            }*/
+            }},
             
             failure: { (error) -> () in
                 print(error.localizedDescription)
@@ -54,12 +57,11 @@ class ViewController: UIViewController{
         
         Fvc.CreateAuthenticatedUser(self.EmailField.text!, Upassword: self.PasswordField.text!,
             
-            Shouldverify: true, Success: { (userId) -> () in
-                
-               print(userId)
-              [self.alertView("Email address verification", Message: "We have sent you an email that contains a link - you must click this link before you can continue.")]
-                
-               self.FBDataBase.AddUserInDB(self.EmailField.text!, Upassword: self.PasswordField.text!, UserId: userId)
+            Shouldverify: false, Success: { (userId) -> () in
+              print(userId)
+              // [self.alertView("Email address verification", Message: "We have sent you an email that contains a link - you must click this link before you can continue.")]
+            
+                self.FBDataBase.AddUserInDB("Users",ItemNameOrId: userId,DataToStore: self.DataToStore())
             },
             
             Failure: { (error) -> () in
@@ -79,10 +81,17 @@ class ViewController: UIViewController{
         )
        self.presentViewController(alertController, animated: true, completion: nil)
     }
-    func istrue() -> Bool
+    
+    func DataToStore() -> Dictionary <String,NSObject>
     {
-        return true
+        let dic:[String:NSObject] = [
+            
+            "email": self.EmailField.text!,
+            "password": self.PasswordField.text!,
+            
+        ]
+        return dic
     }
-
-}
+    
+  }
 
